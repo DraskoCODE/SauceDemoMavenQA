@@ -38,7 +38,24 @@ public class LoginPage {
     }
 
     public void clickLogin() {
-        buttonLogin().click();
+        driver.findElement(By.name("login-button")).click();
+        //buttonLogin().click();
+    }
+
+    public void close() {
+        driver.close();
+        driver.quit();
+    }
+
+    public boolean isOpen() {
+        String url = driver.getCurrentUrl();
+
+        if(url.equals("https://www.saucedemo.com/")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
