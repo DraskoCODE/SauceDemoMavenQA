@@ -95,6 +95,16 @@ public class ProductsTests {
         ProductsPage productsPage = new ProductsPage(driver);
         productsPage.sortByValue("Price (high to low)");
         productsPage.printProductPrice();
+        boolean isSorted = productsPage.isProductSortFromHighToLowByPrice();
+
+        if(isSorted) {
+            System.out.println("Sorting is as expected");
+        }
+        else {
+            System.out.println("Sorting is not as expected");
+        }
+
+        Assert.assertEquals(isSorted, true, "Products are not sorted as expected, from high to low by price");
 
         productsPage.close();
 

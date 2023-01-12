@@ -81,4 +81,28 @@ public class ProductsPage {
         }
     }
 
+    public boolean isProductSortFromHighToLowByPrice() {
+        boolean toReturn = true;
+
+        WebElement container = driver.findElement(By.id("inventory_container"));
+
+        List<WebElement> listInventoryItems = container.findElements(By.xpath(".//div[@class='inventory_item']"));
+
+        for(int i = 0; i < listInventoryItems.size() - 1; i++) {
+            WebElement itemPriceFirst = listInventoryItems.get(i).findElement(By.xpath(".//div[@class='inventory_item_price']"));
+            String itemPriceFirstText = itemPriceFirst.getText();
+            Double itemPriceFirstNumber = Double.parseDouble(itemPriceFirstText.substring(1));
+            int j = i + 1;
+            WebElement itemPriceSecond = listInventoryItems.get(j).findElement(By.xpath(".//div[@class='inventory_item_price']"));
+            String itemPriceSecondText = itemPriceSecond.getText();
+            Double itemPriceSecondNumber = Double.parseDouble(itemPriceSecondText.substring(1));
+            if(itemPriceFirstNumber < itemPriceSecondNumber) {
+                toReturn = false;
+                break;
+            }
+        }
+
+        return toReturn;
+    }
+
 }
