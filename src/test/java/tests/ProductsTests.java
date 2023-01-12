@@ -97,6 +97,7 @@ public class ProductsTests {
         productsPage.printProductPrice();
 
         productsPage.close();
+
     }
 
 }
