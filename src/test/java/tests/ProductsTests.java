@@ -3,6 +3,7 @@ package tests;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
 
@@ -80,6 +81,31 @@ public class ProductsTests {
 
         productsPage.close();
     }
+
+    @Test
+    public void verifyAddProductToCartOnCartPage() {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\drago\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
+        ChromeDriver driver = new ChromeDriver();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.openPage();
+        loginPage.setUserName("standard_user");
+        loginPage.setPassword("secret_sauce");
+        loginPage.clickLogin();
+
+        ProductsPage productsPage = new ProductsPage(driver);
+        productsPage.addProductToCartByName("Sauce Labs Backpack");
+        productsPage.openCart();
+
+        CartPage cartPage = new CartPage(driver);
+        boolean isProductAdded = cartPage.isProductInCart("Sauce Labs Backpack");
+
+        Assert.assertEquals(isProductAdded, true, "Product with name Sauce Labs Backpack is not added to cart");
+
+        cartPage.close();
+
+    }
+
 
     @Test
     public void verifySortProduct() {

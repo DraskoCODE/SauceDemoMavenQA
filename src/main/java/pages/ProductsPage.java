@@ -105,4 +105,19 @@ public class ProductsPage {
         return toReturn;
     }
 
+    public WebElement getCart() {
+        return driver.findElement(By.xpath("//a[@class='shopping_cart_link']"));
+    }
+
+    public void openCart() {
+        //driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click();
+        getCart().click();
+    }
+
+    public Integer getProductCount() {
+        WebElement cart = getCart();
+        return Integer.parseInt(cart.findElement(By.xpath(".//span")).getText());
+    }
+
+
 }
