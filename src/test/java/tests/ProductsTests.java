@@ -6,6 +6,7 @@ import org.testng.annotations.Test;
 import pages.CartPage;
 import pages.LoginPage;
 import pages.ProductsPage;
+import provider.ProductsProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,26 @@ public class ProductsTests {
         }
 
         Assert.assertEquals(productsPage.productCountInCart(), productToAdd.size(), "Product count is not equals");
+
+        productsPage.close();
+    }
+
+    @Test(dataProvider = "ProductProvider", dataProviderClass = ProductsProvider.class)
+    public void verifyAddProductToCart(String productName) {
+        System.setProperty("webdriver.chrome.driver", "C:\\Users\\drago\\Downloads\\chromedriver_win32 (2)\\chromedriver.exe");
+        ChromeDriver driver = new ChromeDriver();
+
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.openPage();
+        loginPage.setUserName("standard_user");
+        loginPage.setPassword("secret_sauce");
+        loginPage.clickLogin();
+
+        ProductsPage productsPage = new ProductsPage(driver);
+        Integer productCountBeforeAdd = productsPage.productCountInCart();
+        productsPage.addProductToCartByName(productName);
+
+        Assert.assertEquals(productsPage.productCountInCart(), productCountBeforeAdd + 1, "Product count is not equals");
 
         productsPage.close();
     }

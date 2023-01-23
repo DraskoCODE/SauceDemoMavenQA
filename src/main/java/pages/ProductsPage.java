@@ -61,8 +61,16 @@ public class ProductsPage {
     }
 
     public Integer productCountInCart() {
-        WebElement cartNumber = driver.findElement(By.xpath("//span[@class='shopping_cart_badge']"));
-        return Integer.parseInt(cartNumber.getText());
+        //WebElement cartNumber = driver.findElement(By.xpath("//span[@class='shopping_cart_badge']"));
+        //return Integer.parseInt(cartNumber.getText());
+
+        List<WebElement> listCartBadge = driver.findElements(By.xpath("//span[@class='shopping_cart_badge']"));
+        if(listCartBadge.size() == 0) {
+            return 0;
+        }
+        else {
+            return Integer.parseInt(listCartBadge.get(0).getText());
+        }
     }
 
     public void sortByValue(String sortValue) {
